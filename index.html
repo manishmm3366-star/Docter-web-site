@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>MediPro — Doctor's Website Template</title>
+    <!-- Font Awesome 6 (Free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet"/>
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            --primary: #0a7e8c;
+            --primary-dark: #065a66;
+            --primary-light: #e0f2f5;
+            --secondary: #2d3748;
+            --accent: #f6ad55;
+            --white: #ffffff;
+            --light-bg: #f7fafc;
+            --gray: #a0aec0;
+            --dark: #1a202c;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --radius: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font: 'Inter', sans-serif;
+            --max-width: 1200px;
+            --header-height: 72px;
+        }
+
+        /* ===== RESET & BASE ===== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font);
+            color: var(--secondary);
+            background: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-top: var(--header-height);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        ul {
+            list-style: none;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: 0 4px 14px rgba(10, 126, 140, 0.35);
+            letter-spacing: 0.3px;
+        }
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(10, 126, 140, 0.4);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            box-shadow: inset 0 0 0 2px var(--primary);
+        }
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: 0 4px 14px rgba(10, 126, 140, 0.35);
+        }
+        .btn-accent {
+            background: var(--accent);
+            color: var(--dark);
+            box-shadow: 0 4px 14px rgba(246, 173, 85, 0.35);
+        }
+        .btn-accent:hover {
+            background: #e69e3e;
+            transform: translateY(-2px);
+        }
+        .btn-sm {
+            padding: 10px 22px;
+            font-size: 0.9rem;
+        }
+
+        /* ===== HEADER / NAVBAR ===== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        .header.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        .logo i {
+            font-size: 1.8rem;
+        }
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+        .nav-links a {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--secondary);
+            transition: var(--transition);
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        .nav-links .btn {
+            padding: 10px 22px;
+            font-size: 0.85rem;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .hamburger span {
+            width: 26px;
+            height: 2.5px;
+            background: var(--secondary);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 60px 0 80px;
+            background: linear-gradient(135deg, #f0f9fa 0%, #e0f2f5 100%);
+            position: relative;
+            overflow: hidden;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(10, 126, 140, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-content h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.15;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+        .hero-content h1 span {
+            color: var(--primary);
+        }
+        .hero-content p {
+            font-size: 1.15rem;
+            color: #4a5568;
+            max-width: 480px;
+            margin-bottom: 32px;
+            line-height: 1.8;
+        }
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .hero-badges .badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            background: rgba(255, 255, 255, 0.7);
+            padding: 8px 18px;
+            border-radius: 50px;
+            backdrop-filter: blur(4px);
+        }
+        .hero-badges .badge i {
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero-image .img-placeholder {
+            width: 100%;
+            max-width: 480px;
+            aspect-ratio: 1/1;
+            background: linear-gradient(145deg, var(--primary-light), #c5e6eb);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            color: var(--primary);
+            box-shadow: 0 30px 60px rgba(10, 126, 140, 0.2);
+            position: relative;
+        }
+        .hero-image .img-placeholder::after {
+            content: '👨‍⚕️';
+            font-size: 7rem;
+        }
+        .hero-image .floating-card {
+            position: absolute;
+            background: var(--white);
+            padding: 14px 22px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: float 3s ease-in-out infinite;
+        }
+        .hero-image .floating-card:nth-child(2) {
+            bottom: 10%;
+            right: -10%;
+            animation-delay: 0.5s;
+        }
+        .hero-image .floating-card:nth-child(3) {
+            top: 15%;
+            left: -8%;
+            animation-delay: 1s;
+        }
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .section-title h2 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        .section-title p {
+            color: #718096;
+            max-width: 560px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+        }
+        .section-title h2 span {
+            color: var(--primary);
+        }
+
+        /* ===== SERVICES ===== */
+        .services {
+            padding: 80px 0;
+            background: var(--white);
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .service-card {
+            background: var(--white);
+            padding: 36px 28px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            text-align: center;
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-light);
+        }
+        .service-card .icon {
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+            display: inline-block;
+            background: var(--primary-light);
+            width: 72px;
+            height: 72px;
+            line-height: 72px;
+            border-radius: 50%;
+        }
+        .service-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        .service-card p {
+            color: #718096;
+            font-size: 0.95rem;
+        }
+
+        /* ===== ABOUT ===== */
+        .about {
+            padding: 80px 0;
+            background: var(--light-bg);
+        }
+        .about .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .about-image .img-placeholder {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: linear-gradient(145deg, var(--primary-light), #b5dce3);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+        .about-content h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .about-content h2 span {
+            color: var(--primary);
+        }
+        .about-content p {
+            color: #4a5568;
+            margin-bottom: 16px;
+            font-size: 1.02rem;
+        }
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .about-stats .stat {
+            text-align: center;
+        }
+        .about-stats .stat h4 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .about-stats .stat p {
+            font-size: 0.85rem;
+            color: #718096;
+            margin: 0;
+        }
+
+        /* ===== APPOINTMENT ===== */
+        .appointment {
+            padding: 80px 0;
+            background: var(--white);
+        }
+        .appointment-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+        .appointment-info h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .appointment-info p {
+            color: #4a5568;
+            margin-bottom: 24px;
+        }
+        .appointment-info .info-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 14px;
+            font-size: 1rem;
+        }
+        .appointment-info .info-item i {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .appointment-form {
+            background: var(--light-bg);
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        .appointment-form h4 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            color: var(--secondary);
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-family: var(--font);
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--white);
+            color: var(--secondary);
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(10, 126, 140, 0.12);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials {
+            padding: 80px 0;
+            background: var(--light-bg);
+        }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .testimonial-card {
+            background: var(--white);
+            padding: 32px 28px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+        .testimonial-card .stars {
+            color: #f6ad55;
+            font-size: 1rem;
+            margin-bottom: 12px;
+        }
+        .testimonial-card p {
+            color: #4a5568;
+            font-style: italic;
+            margin-bottom: 16px;
+            font-size: 0.98rem;
+        }
+        .testimonial-card .author {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .testimonial-card .author .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        .testimonial-card .author .name {
+            font-weight: 600;
+        }
+        .testimonial-card .author .role {
+            font-size: 0.85rem;
+            color: #718096;
+        }
+
+        /* ===== BLOG ===== */
+        .blog {
+            padding: 80px 0;
+            background: var(--white);
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .blog-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+        .blog-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+        .blog-card .blog-img {
+            height: 200px;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--primary);
+        }
+        .blog-card .blog-body {
+            padding: 24px;
+        }
+        .blog-card .blog-body .tag {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 50px;
+            margin-bottom: 10px;
+        }
+        .blog-card .blog-body h3 {
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+        }
+        .blog-card .blog-body p {
+            color: #718096;
+            font-size: 0.92rem;
+            margin-bottom: 14px;
+        }
+        .blog-card .blog-body .read-more {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .blog-card .blog-body .read-more:hover {
+            gap: 12px;
+        }
+
+        /* ===== CONTACT ===== */
+        .contact {
+            padding: 80px 0;
+            background: var(--light-bg);
+        }
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+        .contact-info h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .contact-info p {
+            color: #4a5568;
+            margin-bottom: 28px;
+        }
+        .contact-info .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+        .contact-info .contact-item i {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        .contact-info .contact-item .text {
+            font-weight: 500;
+        }
+        .contact-info .contact-item .text small {
+            display: block;
+            font-weight: 400;
+            color: #718096;
+        }
+
+        .contact-form {
+            background: var(--white);
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        .contact-form h4 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+
+        /* ===== EMERGENCY BANNER ===== */
+        .emergency-banner {
+            padding: 30px 0;
+            background: var(--primary);
+            color: var(--white);
+        }
+        .emergency-banner .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .emergency-banner .left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .emergency-banner .left i {
+            font-size: 2.4rem;
+        }
+        .emergency-banner .left h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        .emergency-banner .left p {
+            opacity: 0.85;
+            font-size: 0.95rem;
+        }
+        .emergency-banner .btn {
+            background: var(--white);
+            color: var(--primary);
+            box-shadow: none;
+        }
+        .emergency-banner .btn:hover {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--dark);
+            color: #cbd5e0;
+            padding: 60px 0 30px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-brand .logo {
+            color: var(--white);
+            margin-bottom: 14px;
+        }
+        .footer-brand .logo span {
+            color: var(--white);
+        }
+        .footer-brand p {
+            font-size: 0.95rem;
+            max-width: 300px;
+            opacity: 0.8;
+        }
+        .footer-col h4 {
+            color: var(--white);
+            font-size: 1.05rem;
+            margin-bottom: 16px;
+        }
+        .footer-col a {
+            display: block;
+            color: #cbd5e0;
+            margin-bottom: 10px;
+            transition: var(--transition);
+            font-size: 0.92rem;
+        }
+        .footer-col a:hover {
+            color: var(--white);
+            padding-left: 6px;
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        .footer-socials {
+            display: flex;
+            gap: 16px;
+        }
+        .footer-socials a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            color: #cbd5e0;
+        }
+        .footer-socials a:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        /* ===== PATIENT PORTAL MODAL ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal {
+            background: var(--white);
+            max-width: 440px;
+            width: 100%;
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.2);
+            position: relative;
+            animation: modalIn 0.3s ease;
+        }
+        @keyframes modalIn {
+            from {
+                transform: scale(0.9) translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+        .modal .close-modal {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #a0aec0;
+            transition: var(--transition);
+            background: none;
+            border: none;
+        }
+        .modal .close-modal:hover {
+            color: var(--dark);
+            transform: rotate(90deg);
+        }
+        .modal h3 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        .modal p {
+            color: #718096;
+            margin-bottom: 24px;
+        }
+        .modal .form-group {
+            margin-bottom: 16px;
+        }
+        .modal .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-content p {
+                margin: 0 auto 32px;
+            }
+            .hero-badges {
+                justify-content: center;
+            }
+            .hero-image .img-placeholder {
+                max-width: 360px;
+                margin: 0 auto;
+            }
+            .about .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .about-stats {
+                justify-items: center;
+            }
+            .appointment-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: var(--header-height);
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                flex-direction: column;
+                padding: 30px 24px;
+                gap: 20px;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+                transform: translateY(-120%);
+                transition: var(--transition);
+                border-bottom: 2px solid var(--primary-light);
+            }
+            .nav-links.open {
+                transform: translateY(0);
+            }
+            .hamburger {
+                display: flex;
+            }
+            .hero {
+                min-height: 70vh;
+                padding: 40px 0 60px;
+            }
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            .hero-image .img-placeholder {
+                max-width: 280px;
+                font-size: 5rem;
+            }
+            .hero-image .img-placeholder::after {
+                font-size: 4.5rem;
+            }
+            .hero-image .floating-card {
+                display: none;
+            }
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .footer-brand p {
+                margin: 0 auto;
+            }
+            .emergency-banner .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .emergency-banner .left {
+                flex-direction: column;
+                text-align: center;
+            }
+            .about-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+            .appointment-form {
+                padding: 24px;
+            }
+            .contact-form {
+                padding: 24px;
+            }
+            .modal {
+                padding: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header" id="header">
+        <div class="container">
+            <a href="#" class="logo">
+                <i class="fas fa-heartbeat"></i> Medi<span>Pro</span>
+            </a>
+
+            <nav class="nav-links" id="navLinks">
+                <a href="#home" class="active">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#appointment">Appointment</a>
+                <a href="#blog">Blog</a>
+                <a href="#contact">Contact</a>
+                <a href="#" class="btn btn-sm" id="patientPortalBtn">
+                    <i class="fas fa-user-md"></i> Patient Portal
+                </a>
+            </nav>
+
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Your Health, <br/><span>Our Priority</span></h1>
+                <p>
+                    Compassionate, expert care tailored to you. Book an appointment
+                    with trusted doctors and take the first step toward better health.
+                </p>
+                <div style="display: flex; flex-wrap: wrap; gap: 14px;">
+                    <a href="#appointment" class="btn">
+                        <i class="fas fa-calendar-check"></i> Book Appointment
+                    </a>
+                    <a href="#about" class="btn btn-outline">
+                        <i class="fas fa-info-circle"></i> Learn More
+                    </a>
+                </div>
+                <div class="hero-badges">
+                    <span class="badge"><i class="fas fa-check-circle"></i> 15+ Years Experience</span>
+                    <span class="badge"><i class="fas fa-check-circle"></i> 10k+ Happy Patients</span>
+                    <span class="badge"><i class="fas fa-check-circle"></i> 24/7 Emergency Care</span>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="img-placeholder">
+                    <div class="floating-card" style="bottom: 10%; right: -10%;">
+                        <i class="fas fa-star" style="color: #f6ad55;"></i> 4.9 Rating
+                    </div>
+                    <div class="floating-card" style="top: 15%; left: -8%;">
+                        <i class="fas fa-clock" style="color: var(--primary);"></i> Open 24/7
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SERVICES ===== -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our <span>Services</span></h2>
+                <p>Comprehensive medical care delivered with expertise and empathy.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <span class="icon"><i class="fas fa-stethoscope"></i></span>
+                    <h3>General Consultation</h3>
+                    <p>Comprehensive check-ups and expert medical advice for all ages.</p>
+                </div>
+                <div class="service-card">
+                    <span class="icon"><i class="fas fa-heart"></i></span>
+                    <h3>Cardiology</h3>
+                    <p>Advanced heart care, diagnosis, and treatment for cardiovascular health.</p>
+                </div>
+                <div class="service-card">
+                    <span class="icon"><i class="fas fa-brain"></i></span>
+                    <h3>Neurology</h3>
+                    <p>Specialized care for brain, spine, and nervous system disorders.</p>
+                </div>
+                <div class="service-card">
+                    <span class="icon"><i class="fas fa-baby"></i></span>
+                    <h3>Pediatrics</h3>
+                    <p>Gentle, expert care for infants, children, and adolescents.</p>
+                </div>
+                <div class="service-card">
+                    <span class="icon"><i class="fas fa-female"></i></span>
+                    <h3>Women's Health</h3>
+                    <p>Comprehensive gynecology, prenatal, and postnatal care.</p>
+                </div>
+                <div class="service-card">
+                    <span class="icon"><i class="fas fa-bone"></i></span>
+                    <h3>Orthopedics</h3>
+                    <p>Expert treatment for bones, joints, and musculoskeletal conditions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-image">
+                <div class="img-placeholder">
+                    <span>🏥</span>
+                </div>
+            </div>
+            <div class="about-content">
+                <h2>About <span>MediPro</span></h2>
+                <p>
+                    At MediPro, we believe that exceptional healthcare begins with
+                    compassion, expertise, and a commitment to your well-being.
+                    Our team of board-certified doctors and specialists work together
+                    to provide personalized care for every patient.
+                </p>
+                <p>
+                    With state-of-the-art facilities and a patient-first approach,
+                    we strive to make every visit comfortable, efficient, and effective.
+                </p>
+                <div class="about-stats">
+                    <div class="stat">
+                        <h4>15+</h4>
+                        <p>Years of Excellence</p>
+                    </div>
+                    <div class="stat">
+                        <h4>10k+</h4>
+                        <p>Happy Patients</p>
+                    </div>
+                    <div class="stat">
+                        <h4>98%</h4>
+                        <p>Satisfaction Rate</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== APPOINTMENT ===== -->
+    <section class="appointment" id="appointment">
+        <div class="container">
+            <div class="section-title">
+                <h2>Book an <span>Appointment</span></h2>
+                <p>Schedule a visit with our expert doctors at your convenience.</p>
+            </div>
+            <div class="appointment-wrapper">
+                <div class="appointment-info">
+                    <h3>Why Choose MediPro?</h3>
+                    <p>
+                        We make it easy to get the care you need. Book online, choose
+                        your preferred doctor, and visit us at your scheduled time.
+                    </p>
+                    <div class="info-item">
+                        <i class="fas fa-user-md"></i>
+                        <div><strong>Expert Doctors</strong><br /><small>Board-certified specialists in every field</small></div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div><strong>Flexible Hours</strong><br /><small>Morning, evening &amp; weekend appointments</small></div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <div><strong>Safe &amp; Clean</strong><br /><small>Strict hygiene and safety protocols</small></div>
+                    </div>
+                </div>
+
+                <form class="appointment-form" id="appointmentForm">
+                    <h4>📋 Book Your Visit</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" placeholder="Dr. John Doe" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" placeholder="john@example.com" required />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="+1 234 567 890" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="specialty">Specialty</label>
+                            <select id="specialty">
+                                <option value="">Select a specialty</option>
+                                <option value="general">General Consultation</option>
+                                <option value="cardiology">Cardiology</option>
+                                <option value="neurology">Neurology</option>
+                                <option value="pediatrics">Pediatrics</option>
+                                <option value="womens-health">Women's Health</option>
+                                <option value="orthopedics">Orthopedics</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="date">Preferred Date</label>
+                            <input type="date" id="date" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Preferred Time</label>
+                            <input type="time" id="time" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Additional Notes</label>
+                        <textarea id="message" placeholder="Any symptoms or special requests..."></textarea>
+                    </div>
+                    <button type="submit" class="btn" style="width:100%; justify-content:center;">
+                        <i class="fas fa-paper-plane"></i> Confirm Appointment
+                    </button>
+                    <p id="appointmentFeedback" style="margin-top:14px; font-size:0.9rem; text-align:center; color:var(--primary);"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TESTIMONIALS ===== -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Our <span>Patients Say</span></h2>
+                <p>Real stories from real people who trusted us with their health.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p>"Dr. Sharma took the time to listen and explained everything clearly. I felt genuinely cared for."</p>
+                    <div class="author">
+                        <div class="avatar">R</div>
+                        <div><div class="name">Rahul Mehta</div><div class="role">Patient since 2022</div></div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p>"The cardiology team saved my father's life. We are forever grateful for their expertise and kindness."</p>
+                    <div class="author">
+                        <div class="avatar">S</div>
+                        <div><div class="name">Sneha Patel</div><div class="role">Family member</div></div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p>"From the reception to the consultation, every step was smooth and professional. Highly recommended."</p>
+                    <div class="author">
+                        <div class="avatar">A</div>
+                        <div><div class="name">Amit Kumar</div><div class="role">Patient since 2023</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BLOG ===== -->
+    <section class="blog" id="blog">
+        <div class="container">
+            <div class="section-title">
+                <h2>Health <span>Insights</span></h2>
+                <p>Expert tips and articles to keep you informed and healthy.</p>
+            </div>
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <div class="blog-img">🍎</div>
+                    <div class="blog-body">
+                        <span class="tag">Nutrition</span>
+                        <h3>10 Superfoods for a Stronger Immune System</h3>
+                        <p>Boost your immunity naturally with these nutrient-packed foods recommended by our dietitians.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-img">🧘</div>
+                    <div class="blog-body">
+                        <span class="tag">Mental Health</span>
+                        <h3>Mindfulness Techniques for Everyday Stress</h3>
+                        <p>Simple, science-backed practices to reduce anxiety and improve mental clarity.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-img">🏃</div>
+                    <div class="blog-body">
+                        <span class="tag">Fitness</span>
+                        <h3>5 Easy Exercises for a Healthier Heart</h3>
+                        <p>Stay active with these heart-friendly workouts you can do at home or at the gym.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Get In <span>Touch</span></h2>
+                <p>We're here to help. Reach out to us anytime.</p>
+            </div>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <p>Feel free to contact us via phone, email, or visit our clinic.</p>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="text">123 Health Avenue,<br /><small>New York, NY 10001</small></div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <div class="text">
+                            <a href="tel:+199828280403" style="color:inherit; text-decoration:none;">+19 9828280403</a>
+                            <br /><small>24/7 Emergency Hotline</small>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="text">
+                            <a href="mailto:manishmm3366@gmail.com" style="color:inherit; text-decoration:none;">manishmm3366@gmail.com</a>
+                            <br /><small>We reply within 24 hours</small>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="contact-form" id="contactForm">
+                    <h4>✉️ Send a Message</h4>
+                    <div class="form-group">
+                        <label for="contactName">Your Name</label>
+                        <input type="text" id="contactName" placeholder="Your full name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="contactEmail">Email Address</label>
+                        <input type="email" id="contactEmail" placeholder="you@example.com" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="contactSubject">Subject</label>
+                        <input type="text" id="contactSubject" placeholder="How can we help?" />
+                    </div>
+                    <div class="form-group">
+                        <label for="contactMessage">Message</label>
+                        <textarea id="contactMessage" rows="4" placeholder="Write your message here..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn" style="width:100%; justify-content:center;">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                    <p id="contactFeedback" style="margin-top:14px; font-size:0.9rem; text-align:center; color:var(--primary);"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== EMERGENCY BANNER ===== -->
+    <section class="emergency-banner">
+        <div class="container">
+            <div class="left">
+                <i class="fas fa-ambulance"></i>
+                <div>
+                    <h3>🚨 Emergency? Call Us Now</h3>
+                    <p>Immediate medical assistance available 24/7</p>
+                </div>
+            </div>
+            <a href="tel:+199828280403" class="btn">
+                <i class="fas fa-phone"></i> +19 9828280403
+            </a>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo"><i class="fas fa-heartbeat"></i> Medi<span>Pro</span></div>
+                    <p>Empowering healthier lives through compassionate, expert care and cutting-edge medical solutions.</p>
+                    <div style="margin-top:16px; display:flex; gap:12px;">
+                        <span style="background:var(--primary); padding:2px 12px; border-radius:50px; font-size:0.75rem; font-weight:600;">ISO 9001</span>
+                        <span style="background:var(--primary); padding:2px 12px; border-radius:50px; font-size:0.75rem; font-weight:600;">NABH</span>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <a href="#home">Home</a>
+                    <a href="#about">About Us</a>
+                    <a href="#services">Services</a>
+                    <a href="#appointment">Appointment</a>
+                </div>
+                <div class="footer-col">
+                    <h4>For Patients</h4>
+                    <a href="#">Patient Portal</a>
+                    <a href="#">Insurance</a>
+                    <a href="#">Medical Records</a>
+                    <a href="#">Prescriptions</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <a href="#">Blog</a>
+                    <a href="#">FAQs</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; 2026 MediPro. All rights reserved.</span>
+                <div class="footer-socials">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== PATIENT PORTAL MODAL ===== -->
+    <div class="modal-overlay" id="portalModal">
+        <div class="modal">
+            <button class="close-modal" id="closeModalBtn">&times;</button>
+            <h3><i class="fas fa-user-md" style="color:var(--primary);"></i> Patient Portal</h3>
+            <p>Log in to access your medical records, test results, and appointments.</p>
+            <form id="portalForm">
+                <div class="form-group">
+                    <label for="portalEmail">Email Address</label>
+                    <input type="email" id="portalEmail" placeholder="patient@example.com" required />
+                </div>
+                <div class="form-group">
+                    <label for="portalPassword">Password</label>
+                    <input type="password" id="portalPassword" placeholder="••••••••" required />
+                </div>
+                <button type="submit" class="btn" style="width:100%; justify-content:center;">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+                <p style="margin-top:16px; font-size:0.85rem; text-align:center; color:#718096;">
+                    New patient? <a href="#" style="color:var(--primary); font-weight:600;">Register here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // ---- MOBILE NAV ----
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('open');
+            });
+
+            // Close nav on link click (mobile)
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('open');
+                });
+            });
+
+            // ---- HEADER SCROLL SHADOW ----
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 20) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // ---- ACTIVE NAV LINK ON SCROLL ----
+            const sections = document.querySelectorAll('section[id]');
+            const navAnchors = document.querySelectorAll('.nav-links a:not(.btn)');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 120;
+                    if (window.scrollY >= sectionTop) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                navAnchors.forEach(anchor => {
+                    anchor.classList.remove('active');
+                    if (anchor.getAttribute('href') === '#' + current) {
+                        anchor.classList.add('active');
+                    }
+                });
+            });
+
+            // ---- APPOINTMENT FORM ----
+            const appForm = document.getElementById('appointmentForm');
+            const appFeedback = document.getElementById('appointmentFeedback');
+            appForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('fullName').value.trim();
+                if (name.length < 2) {
+                    appFeedback.style.color = '#e53e3e';
+                    appFeedback.textContent = '⚠️ Please enter your full name.';
+                    return;
+                }
+                appFeedback.style.color = '#0a7e8c';
+                appFeedback.textContent = '✅ Appointment booked! We\'ll confirm via email shortly.';
+                appForm.reset();
+                setTimeout(() => { appFeedback.textContent = ''; }, 5000);
+            });
+
+            // ---- CONTACT FORM ----
+            const contactForm = document.getElementById('contactForm');
+            const contactFeedback = document.getElementById('contactFeedback');
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('contactName').value.trim();
+                if (name.length < 2) {
+                    contactFeedback.style.color = '#e53e3e';
+                    contactFeedback.textContent = '⚠️ Please enter your name.';
+                    return;
+                }
+                contactFeedback.style.color = '#0a7e8c';
+                contactFeedback.textContent = '✅ Message sent! We\'ll get back to you soon.';
+                contactForm.reset();
+                setTimeout(() => { contactFeedback.textContent = ''; }, 5000);
+            });
+
+            // ---- PATIENT PORTAL MODAL ----
+            const modal = document.getElementById('portalModal');
+            const openBtn = document.getElementById('patientPortalBtn');
+            const closeBtn = document.getElementById('closeModalBtn');
+
+            openBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+
+            function closeModal() {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) closeModal();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeModal();
+            });
+
+            // ---- PORTAL FORM ----
+            document.getElementById('portalForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('portalEmail').value.trim();
+                if (email && email.includes('@')) {
+                    alert('🔐 Logging in as ' + email + '... (Demo)');
+                    closeModal();
+                    this.reset();
+                } else {
+                    alert('⚠️ Please enter a valid email address.');
+                }
+            });
+
+            // ---- SMOOTH SCROLL FOR ANCHOR LINKS (optional enhancement) ----
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    const targetEl = document.querySelector(targetId);
+                    if (targetEl) {
+                        e.preventDefault();
+                        const offset = 80;
+                        const y = targetEl.getBoundingClientRect().top + window.scrollY - offset;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                    }
+                });
+            });
+
+        });
+    </script>
+
+</body>
+</html>
